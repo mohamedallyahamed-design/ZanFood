@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: zanfood
+      POSTGRES_USER: zanfood
+      POSTGRES_PASSWORD: dev_only_change_me
+    ports: ["5432:5432"]
+    volumes:
+      - zanfood_pg:/var/lib/postgresql/data
+      - ./database/migrations/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+      - ./database/seeds/001_demo.sql:/docker-entrypoint-initdb.d/010_settings.sql:ro
+      - ./database/seeds/010_demo_restaurants.sql:/docker-entrypoint-initdb.d/020_demo.sql:ro
+volumes: {zanfood_pg: {}}
